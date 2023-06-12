@@ -1,72 +1,88 @@
-const fs = require('fs');
+const Guitar = require(`../models/guitarModel`);
+exports.getAllGuitars = async (req, res) => {
+  try {
+    const guitars = await Guitar.find();
 
-const guitars = JSON.parse(
-  fs.readFileSync(`${__dirname}/../devdata/data.json`)
-);
-
-exports.checkID = (req, res, next, val) => {
-  console.log(`Guitar ID is: ${val}`);
-  if (req.param.id * 1 > guitars.length) {
-    return res.status(404).json({
+    res.status(200).json({
+      status: 'success',
+      data: {
+        guitars,
+      },
+    });
+  } catch (err) {
+    res.send(404).json({
       status: 'fail',
-      message: 'Invalid ID',
+      message: err,
     });
   }
-  next();
 };
 
-exports.getAllGuitars = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      guitars,
-    },
-  });
+exports.getGuitar = async (req, res) => {
+  try {
+    const guitar = await Guitar.findById(req.params.id);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        guitar,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
-exports.getGuitar = (req, res) => {
-  const id = req.params.id * 1;
-  const guitar = guitars.find((item) => item.id === id);
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      guitar,
-    },
-  });
+exports.createGuitar = async (req, res) => {
+  try {
+    const newGuitar = await Guitar.create(req.body);
+    res.status(201).send({
+      status: 'success',
+      data: {
+        guitar: newGuitar,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
-exports.createGuitar = (req, res) => {
-  const newId = guitars[guitars.length - 1].id + 1;
-  const newGuitar = Object.assign({ id: newId }, req.body);
-
-  guitars.push(newGuitar);
-  fs.writeFile(
-    `${__dirname}/../devdata/data.json`,
-    JSON.stringify(guitars),
-    (err) => {
-      res.status(201).send({
-        status: 'success',
-        data: {
-          guitar: newGuitar,
-        },
-      });
-    }
-  );
+exports.updateGuitar = async (req, res) => {
+  try {
+    const guitar = await Guitar.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        guitar,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
-exports.updateGuitar = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      guitar: '<Updated guitar here...>',
-    },
-  });
-};
+exports.deleteGuitar = async (req, res) => {
+  try {
+    await Guitar.findByIdAndDelete(req.params.id);
 
-exports.deleteGuitar = (req, res) => {
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
