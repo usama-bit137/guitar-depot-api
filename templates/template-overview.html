@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="../icons/guitar.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../icons/guitar.png" />
     <title>Guitar Depository</title>
     <style>
-        @font-face {
-            font-family: "Playfair";
-            src: url("../fonts/Playfair_9pt_SemiExpanded-Regular.ttf") format("truetype");
-        } 
-    
-        body {
-            font-family: "Playfair", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
+      @font-face {
+        font-family: 'Playfair';
+        src: url('../fonts/Playfair_9pt_SemiExpanded-Regular.ttf') format('truetype');
+      }
 
-        img {
-            max-width: 100px;
-            top: 50%;  
-        }
+      body {
+        font-family: 'Playfair', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
 
-        .image {
-            margin-right: 50px;
-            /* border: 1px solid red;  */
-        }
+      img {
+        max-width: 100px;
+        top: 50%;
+      }
 
-        .guitar-flex {
-            display: flex;
-            justify-content: center;
-            margin: auto;
-            max-width: 800px;
-            padding: 50px;
-        }
+      .image {
+        margin-right: 50px;
+        /* border: 1px solid red;  */
+      }
+
+      .guitar-flex {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        max-width: 800px;
+        padding: 50px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Guitar Depository</h1>
-    <div class="guitar-container">
-        {%GUITAR_CARDS%}
-    </div>
-</body>
+    <div class="guitar-container">{%GUITAR_CARDS%}</div>
+  </body>
 </html>
