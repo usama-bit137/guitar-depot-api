@@ -1,8 +1,8 @@
 const express = require('express');
-const controller = require('../controllers/guitarController');
 
+const controller = require('../controllers/guitarController');
 const router = express.Router();
-router.param('id', controller.checkID);
+
 router
   .route('/')
   .get(controller.getAllGuitars)
