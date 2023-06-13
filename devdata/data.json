@@ -3,7 +3,7 @@
     "name": "Stratocaster",
     "manufacturer": "Fender",
     "introduced": 1954,
-    "neck": "Maple",
+    "neck": ["Maple"],
     "fretboard": ["Maple", "Rosewood", "Pau Ferro"],
     "body": "Ash",
     "scale": 25.5,
