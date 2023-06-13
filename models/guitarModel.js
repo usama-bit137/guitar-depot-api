@@ -15,13 +15,13 @@ const guitarSchema = new mongoose.Schema({
     required: [true, 'A guitar requires a year of introduction'],
   },
   neck: {
-    type: String,
+    type: Array,
   },
   fretboard: {
-    type: String,
+    type: Array,
   },
   body: {
-    type: String,
+    type: Array,
   },
   scale: {
     type: Number,
