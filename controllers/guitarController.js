@@ -5,7 +5,6 @@ exports.getAllGuitars = async (req, res) => {
     // BUILD QUERY
     // 1) Filtering:
     const queryObj = { ...req.query };
-    console.log(req.query);
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
