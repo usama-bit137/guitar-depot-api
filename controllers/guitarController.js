@@ -1,6 +1,17 @@
 const Guitar = require(`../models/guitarModel`);
 const APIFeatures = require('../utils/APIFeatures');
 
+exports.aliasGuitarsByManufacturer = (req, res, next) => {
+  let manufacturer = req.params.manufacturer;
+  manufacturer = manufacturer.split('-').map((item) => {
+    return item[0].toUpperCase() + item.slice(1);
+  });
+  req.query.manufacturer = manufacturer.join(' ');
+  console.log(req.query.manufacturer);
+  req.query.fields = 'name,manufacturer,introduced,desc';
+  next();
+};
+
 exports.getAllGuitars = async (req, res) => {
   try {
     const features = new APIFeatures(Guitar.find(), req.query)
