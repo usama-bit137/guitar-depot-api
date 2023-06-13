@@ -4,7 +4,9 @@ const controller = require('../controllers/guitarController');
 const router = express.Router();
 
 router.route('/').get(controller.getAllGuitars).post(controller.createGuitar);
-
+router
+  .route('/:manufacturer')
+  .get(controller.aliasGuitarsByManufacturer, controller.getAllGuitars);
 router
   .route('/:id')
   .get(controller.getGuitar)
