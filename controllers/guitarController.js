@@ -1,7 +1,23 @@
 const Guitar = require(`../models/guitarModel`);
+
 exports.getAllGuitars = async (req, res) => {
   try {
-    const guitars = await Guitar.find();
+    // BUILD QUERY
+    // 1) Filtering:
+    const queryObj = { ...req.query };
+    console.log(req.query);
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    // 2) Advanced Filtering:
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    // EXECUTE QUERY
+    const query = Guitar.find(JSON.parse(queryStr));
+
+    // SEND RESPONSE
+    const guitars = await query;
 
     res.status(200).json({
       status: 'success',
@@ -36,6 +52,7 @@ exports.getGuitar = async (req, res) => {
 
 exports.createGuitar = async (req, res) => {
   try {
+    console.log();
     const newGuitar = await Guitar.create(req.body);
     res.status(201).send({
       status: 'success',
