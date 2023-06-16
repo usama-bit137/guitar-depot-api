@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/guitars', guitarRouter);
 
 app.use('*', (req, res, next) => {
-  const error = new Error(`Invald URL ${req.originalUrl} on this server.`);
-  next(error);
+  // const error = new Error(`Invald URL ${req.originalUrl} on this server.`);
+  next(new AppError(`Invald URL ${req.originalUrl} on this server.`, 404));
 });
 
 app.use(globalErrorHandler);
