@@ -7,9 +7,9 @@ router.route('/').get(controller.getAllGuitars).post(controller.createGuitar);
 
 router.route('/guitar-stats').get(controller.getGuitarStats);
 
-router
-  .route('/:slug')
-  .get(controller.aliasGuitarBySlug, controller.getAllGuitars);
+// router
+//   .route('/:slug')
+//   .get(controller.aliasGuitarBySlug, controller.getAllGuitars);
 
 router
   .route('/:id')
