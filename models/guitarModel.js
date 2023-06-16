@@ -27,7 +27,7 @@ const guitarSchema = new mongoose.Schema(
       type: Array,
     },
     scale: {
-      type: Number, 
+      type: Number,
     },
     bridge: {
       type: String,
