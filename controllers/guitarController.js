@@ -1,6 +1,6 @@
 const Guitar = require(`../models/guitarModel`);
 const APIFeatures = require('../utils/APIFeatures');
-
+const AppError = require('../utils/AppError');
 // exports.aliasGuitarsByManufacturer = (req, res, next) => {
 //   // Middleware function which sends the guitars by manufacturer:
 //   let manufacturer = req.params.manufacturer;
@@ -11,137 +11,108 @@ const APIFeatures = require('../utils/APIFeatures');
 //   next();
 // };
 
-exports.aliasGuitarBySlug = (req, res, next) => {
-  req.query.slug = req.params.slug;
-  next();
-};
+// exports.aliasGuitarBySlug = (req, res, next) => {
+//   req.query.slug = req.params.slug;
+//   next();
+// };
 
-exports.getAllGuitars = async (req, res) => {
-  try {
-    const features = new APIFeatures(Guitar.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const guitars = await features.query;
+const catchAsync = require('../utils/catchAsync');
+exports.getAllGuitars = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(Guitar.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const guitars = await features.query;
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        guitars,
-      },
-    });
-  } catch (err) {
-    res.send(404).json({
-      status: 'fail',
-      message: err,
-    });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      guitars,
+    },
+  });
+});
+
+exports.getGuitar = catchAsync(async (req, res, next) => {
+  const guitar = await Guitar.findById(req.params.id);
+
+  if (!guitar) {
+    return next(new AppError(`No guitar found with ID: ${req.params.id}`, 404));
   }
-};
 
-exports.getGuitar = async (req, res) => {
-  try {
-    const guitar = await Guitar.findById(req.params.id);
-    res.status(200).json({
-      status: 'success',
-      data: {
-        guitar,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      guitar,
+    },
+  });
+});
+
+exports.createGuitar = catchAsync(async (req, res, next) => {
+  const newGuitar = await Guitar.create(req.body);
+  res.status(201).send({
+    status: 'success',
+    data: {
+      guitar: newGuitar,
+    },
+  });
+});
+
+exports.updateGuitar = catchAsync(async (req, res, next) => {
+  const guitar = await Guitar.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!guitar) {
+    return next(new AppError(`No guitar found with ID: ${req.params.id}`, 404));
   }
-};
 
-exports.createGuitar = async (req, res) => {
-  try {
-    const newGuitar = await Guitar.create(req.body);
-    res.status(201).send({
-      status: 'success',
-      data: {
-        guitar: newGuitar,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      guitar,
+    },
+  });
+});
+
+exports.deleteGuitar = catchAsync(async (req, res, next) => {
+  const guitar = await Guitar.findByIdAndDelete(req.params.id);
+  if (!guitar) {
+    return next(new AppError(`No guitar found with ID: ${req.params.id}`, 404));
   }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
 
-exports.updateGuitar = async (req, res) => {
-  try {
-    const guitar = await Guitar.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        guitar,
+exports.getGuitarStats = catchAsync(async (req, res, next) => {
+  const stats = await Guitar.aggregate([
+    {
+      $match: { introduced: { $gte: 1950 } },
+    },
+    {
+      $group: {
+        _id: { $toUpper: '$manufacturer' },
+        numGuitars: { $sum: 1 },
+        avgScale: { $avg: '$scale' },
+        avgIntroduced: { $avg: '$introduced' },
       },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
-
-exports.deleteGuitar = async (req, res) => {
-  try {
-    await Guitar.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
-
-exports.getGuitarStats = async (req, res) => {
-  try {
-    const stats = await Guitar.aggregate([
-      {
-        $match: { introduced: { $gte: 1950 } },
+    },
+    { $sort: { introduced: 1 } },
+    {
+      $project: {
+        numGuitars: 1,
+        avgScale: { $round: ['$avgScale', 2] },
+        avgIntroduced: { $round: ['$avgIntroduced', 0] },
       },
-      {
-        $group: {
-          _id: { $toUpper: '$manufacturer' },
-          numGuitars: { $sum: 1 },
-          avgScale: { $avg: '$scale' },
-          avgIntroduced: { $avg: '$introduced' },
-        },
-      },
-      { $sort: { introduced: 1 } },
-      {
-        $project: {
-          numGuitars: 1,
-          avgScale: { $round: ['$avgScale', 2] },
-          avgIntroduced: { $round: ['$avgIntroduced', 0] },
-        },
-      },
-    ]);
-    res.status(200).json({
-      status: 'success',
-      data: {
-        stats,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+    },
+  ]);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      stats,
+    },
+  });
+});
