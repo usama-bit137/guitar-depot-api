@@ -1,6 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
+
 const guitarRouter = require('./routes/guitarRoutes');
+const AppError = require('./utils/AppError');
+const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 app.use(express.json());
@@ -10,4 +13,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/v1/guitars', guitarRouter);
+
+app.use('*', (req, res, next) => {
+  const error = new Error(`Invald URL ${req.originalUrl} on this server.`);
+  next(error);
+});
+
+app.use(globalErrorHandler);
+
 module.exports = app;
