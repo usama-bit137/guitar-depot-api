@@ -10,6 +10,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
+  console.log(`You're the ${process.env.NODE_ENV} build`);
 }
 
 app.use('/api/v1/guitars', guitarRouter);
