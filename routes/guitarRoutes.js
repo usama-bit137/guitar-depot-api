@@ -8,7 +8,7 @@ router.route('/').get(controller.getAllGuitars).post(controller.createGuitar);
 router.route('/guitar-stats').get(controller.getGuitarStats);
 
 // Middleware stack cannot delineate between /:id and /:slug, so
-// we shall remove this for now
+// we will comment it out:
 // router
 //   .route('/:slug')
 //   .get(controller.aliasGuitarBySlug, controller.getAllGuitars);
