@@ -1,7 +1,5 @@
 # Guitar Depository
 
-This is a Node.js project with basic server routing.
+## Introduction
 
-A standard template was used to create a card, containing information about the different guitars.
-
-This project makes use of technologies such as Express.js and MongoDB, to implement a RESTful API as well as making use of MVC architecture.
+This is a fully-functioning RESTful Guitar Storage API written in `node.js`, `express.js` and `mongoose`. The API can perform basic CREATE, READ, UPDATE and DELETE (CRUD) operations and comes with custom built Error Handling out-of-the-box. The API makes use of `mongoose` schemas to enforce rules and validators for client-input.
