@@ -1,6 +1,8 @@
 const Guitar = require(`../models/guitarModel`);
 const APIFeatures = require('../utils/APIFeatures');
 const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/catchAsync');
+
 // exports.aliasGuitarsByManufacturer = (req, res, next) => {
 //   // Middleware function which sends the guitars by manufacturer:
 //   let manufacturer = req.params.manufacturer;
@@ -16,7 +18,6 @@ const AppError = require('../utils/AppError');
 //   next();
 // };
 
-const catchAsync = require('../utils/catchAsync');
 exports.getAllGuitars = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Guitar.find(), req.query)
     .filter()
