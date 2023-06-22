@@ -1,9 +1,12 @@
 const express = require('express');
 const controller = require('../controllers/guitarController');
-
+const authController = require('./../controllers/authController');
 const router = express.Router();
 
-router.route('/').get(controller.getAllGuitars).post(controller.createGuitar);
+router
+  .route('/')
+  .get(authController.protect, controller.getAllGuitars)
+  .post(authController.protect, controller.createGuitar);
 
 router.route('/guitar-stats').get(controller.getGuitarStats);
 
