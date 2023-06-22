@@ -23,11 +23,11 @@ This is a fully-functioning RESTful Guitar API written in `node.js`, `express.js
 
 this is a represetation of data that is easy to understand by us.
 
+**Transfer** is quite self explanatory, in the sense that data or files can be sent or received by the client or server.
+
 ### Desciption of REST Process
 
 In order to better understand the REST architecture we need to define two endpoints of HTTP. A **Client** is a piece of hardware (computer or otherwise) that accesses a service on a computer network. A **Server** is a program that provides a service to a client.
-
-**Transfer** is quite self explanatory, in the sense that data or files can be sent or received by the client or server.
 
 ## Some Useful Links
 
