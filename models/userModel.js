@@ -43,5 +43,12 @@ userSchema.pre('save', async function (next) {
   // this is because the pw confirm is only important for sign-up
 });
 
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;
