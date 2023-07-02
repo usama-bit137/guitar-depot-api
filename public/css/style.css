@@ -70,7 +70,7 @@ img {
 .footer {
   background-color: rgb(173, 173, 173);
   color: white;
-  padding: 20px;
+  padding: 10px;
 
   position: fixed;
   left: 0;
@@ -80,9 +80,9 @@ img {
 }
 
 .footer__nav {
-  padding: 20px;
+  padding: 10px 0;
   display: flex;
-  gap: 30px;
+  gap: 10px;
   justify-content: space-evenly;
 }
 
