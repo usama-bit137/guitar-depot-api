@@ -1,19 +1,20 @@
-!doctype html
+doctype html
 html
     head 
         meta(charset='UTF-8')
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="icon" type="image/png" href="./favicon.png")
+        link(rel='stylesheet' href='css/style.css')
+        link(href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet")
+        title Guitar Depository 
+    body
+        // HEADER:
+        include _header
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./guitar.png" />
-    <title>Guitar Depository</title>
-  </head>
-  <body>
-    <h1>Guitar Depository</h1>
-    <div class="guitar-container">{%GUITAR_CARDS%}</div>
-  </body>
-</html>
+        // CONTENT
+        block content
+            h1 this is a placeholder heading
+
+        // FOOTER
+        include _footer
