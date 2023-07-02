@@ -1,13 +1,14 @@
 extends base
 block content 
     a(href="/overview")
-      button.homepage-back Back
+        img.guitar-back(src='/icons/guitar-button.png')
     
     main.guitar
-      img(src=`${guitar.img}` alt=`${guitar.manufacturer} ${guitar.name}`)
-      h1= `${guitar.manufacturer} ${guitar.name}`
-      h2= `First released: ${guitar.introduced}`
-      h2 Stats
+        h1= `${guitar.manufacturer} ${guitar.name}`
+        h2= `First released: ${guitar.introduced}`
+        img.guitar-image(src=`${guitar.img}` alt=`${guitar.manufacturer} ${guitar.name}`)
+    
+        h3 Technical Stuff
         table(border="1")
             tr 
                 th(colspan="2") Stats
@@ -29,4 +30,5 @@ block content
             tr
                 th Pickups
                 td= `${guitar.pickups}`
-    
+        h3.heading__description Description
+        p.guitar__description= guitar.desc
