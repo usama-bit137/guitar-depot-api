@@ -1,3 +1,8 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 @font-face {
   font-family: 'Playfair';
   src: url('../fonts/Playfair_9pt_SemiExpanded-Regular.ttf') format('truetype');
@@ -9,6 +14,32 @@ body {
     sans-serif;
 }
 
+.header {
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 50px;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
+.header__nav > ul {
+  display: flex;
+  gap: 50px;
+}
+
+li > a {
+  color: white;
+}
+
+ul li {
+  list-style-type: none;
+}
+
 img {
   max-width: 100px;
   top: 50%;
@@ -16,7 +47,12 @@ img {
 
 .image {
   margin-right: 50px;
-  /* border: 1px solid red;  */
+}
+
+.guitar-container {
+  margin: auto;
+  width: 80vw;
+  padding: 50px;
 }
 
 .guitar-flex {
@@ -28,5 +64,29 @@ img {
 }
 
 .guitar {
+  margin: auto;
+}
+
+.footer {
+  background-color: rgb(173, 173, 173);
+  color: white;
+  padding: 20px;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  margin-top: 10px;
+}
+
+.footer__nav {
+  padding: 20px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-evenly;
+}
+
+.footer__copyright {
+  text-align: center;
   margin: auto;
 }
