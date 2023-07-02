@@ -11,7 +11,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/overview', controller.getOverview);
-
-router.get('/guitar', controller.getGuitar);
+router.get('/guitar/:slug', controller.getGuitar);
 
 module.exports = router;
