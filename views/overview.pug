@@ -1,4 +1,16 @@
 extends base
+
 block content
-    h1 Here are all the guitars
-    
+    main.guitar-container
+        each guitar in guitars
+            section.guitar-flex
+                .image
+                    img(src=`${guitar.img}` alt=`${guitar.manufacturer} ${guitar.name}`)
+                .guitar-info
+                    h1.guitar-name=`${guitar.manufacturer} ${guitar.name}`
+                    h2.guitar-introduced= `First released: ${guitar.introduced}`
+                    p.guitar-desc= `${guitar.desc.split('').slice(0, 420).join('')}` 
+                        a(href=`guitar/${guitar.slug}`) ... 
+            
+
+                

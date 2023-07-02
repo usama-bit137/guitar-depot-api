@@ -1,3 +1,32 @@
 extends base
 block content 
-    h1 This is the Fender Stratocaster
+    a(href="/overview")
+      button.homepage-back Back
+    
+    main.guitar
+      img(src=`${guitar.img}` alt=`${guitar.manufacturer} ${guitar.name}`)
+      h1= `${guitar.manufacturer} ${guitar.name}`
+      h2= `First released: ${guitar.introduced}`
+      h2 Stats
+        table(border="1")
+            tr 
+                th(colspan="2") Stats
+            tr 
+                th Body 
+                td= guitar.body.join(', ')
+            tr
+                th Neck
+                td= guitar.neck.join(', ')
+            tr
+                th Fretboard
+                td= guitar.fretboard.join(', ')
+            tr
+                th Scale 
+                td= `${guitar.scale}-inches`
+            tr
+                th Bridge
+                td= `${guitar.bridge}`
+            tr
+                th Pickups
+                td= `${guitar.pickups}`
+    
