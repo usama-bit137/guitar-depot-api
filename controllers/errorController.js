@@ -22,6 +22,9 @@ const handleDuplicateErrorDB = (err) => {
 //   return new AppError(message, 400);
 // };
 
+const handleJWTError = (err) =>
+  new AppError('Invalid token. Please login again', 401);
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -61,6 +64,7 @@ module.exports = (err, req, res, next) => {
     // if (error._message === 'Guitar validation failed') {
     //   error = handleValidationErrorDB(error);
     // }
+    if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
 
     sendErrorProd(error, res);
   }
