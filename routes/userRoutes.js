@@ -1,11 +1,13 @@
 const express = require('express');
-const controller = require('./../controllers/userController');
-const authController = require('./../controllers/authController');
+const controller = require('../controllers/userController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+
+router.use(authController.protect); // we can use middleware on the router itself
 
 router.route('/').get(controller.getAllUsers).post(controller.createUser);
 
