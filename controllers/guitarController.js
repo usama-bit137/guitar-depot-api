@@ -28,6 +28,7 @@ exports.getAllGuitars = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    results: guitars.length,
     data: {
       guitars,
     },
