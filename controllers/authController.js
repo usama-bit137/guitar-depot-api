@@ -61,20 +61,24 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = authorization.split(' ')[1];
   }
 
-  if (!token) return next(new AppError('You are not logged it', 401));
+  if (!token) return next(new AppError('You are not logged in', 401));
 
   // 2) Verify the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log('The decoded JWT is: ');
-  console.log(decoded);
 
   // 3) if successful, check if the user still exists:
-  const freshUser = await User.findById(decoded.id);
-  if (!freshUser)
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser)
     return next(
-      new AppError('The user belonging to this token no longer exists', 401)
+      new AppError('The user belonging to this token no longer exists,', 401)
     );
   // 4) Check if the user changed their password after the token was issued:
-  freshUser.changedPasswordAfter(decoded.iat);
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('Password changed recently. Please login again.', 401)
+    );
+  }
+  req.user = currentUser;
+
   next();
 });
